@@ -20,8 +20,30 @@ export default function LoginForm() {
       password: "",
     },
   });
-  const onSubmit: SubmitHandler<z.infer<typeof LoginSchema>> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<z.infer<typeof LoginSchema>> = async (data) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/login/`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      throw data;
+    } else {
+      data = await response.json();
+      const resultNextServer = await fetch("/api/auth/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(await resultNextServer.json());
+    }
   };
 
   return (

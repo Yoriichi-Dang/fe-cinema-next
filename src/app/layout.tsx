@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Galaxy",
-  description: "Galaxy cinema",
+  title: "Victory",
+  description: "Slaver cinema",
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link rel="icon" href="/assets/logo/logo.jpg" />
+      <link rel="icon" href="assets/logo/victory.png" />
       <body className={inter.className}>{children}</body>
     </html>
   );

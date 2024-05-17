@@ -7,10 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema } from "@/schema";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
-import { useTransition } from "react";
 
 export default function SignUpForm() {
-  const [isPending, startTransition] = useTransition();
   const {
     handleSubmit,
     register,
@@ -28,6 +26,26 @@ export default function SignUpForm() {
     data
   ) => {
     console.log(data);
+    const form = new FormData();
+    form.append("email", data.email);
+    form.append("fullname", data.fullName);
+    form.append("password", data.password);
+    form.append("password_confirm", data.password);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/register/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: form,
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Account have been existed before");
+    } else {
+      alert("Sign up successfully");
+    }
   };
   return (
     <div className="w-4/5 sm:p-2 md:p-4">

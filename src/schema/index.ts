@@ -29,10 +29,7 @@ export const SignUpSchema = z
       .string()
       .trim()
       .min(1, { message: "Full name is required" })
-      .max(50, { message: "Full name is too long" })
-      .regex(/^[a-zA-Z]+$/, {
-        message: "Full name must contain only alphabetic characters",
-      }),
+      .max(50, { message: "Full name is too long" }),
     password: z
       .string()
       .trim()
@@ -51,3 +48,13 @@ export const SignUpSchema = z
       path: ["confirmPassword"],
     }
   );
+export type FormState =
+  | {
+      errors?: {
+        name?: string[];
+        email?: string[];
+        password?: string[];
+      };
+      message?: string;
+    }
+  | undefined;
