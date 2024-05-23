@@ -2,11 +2,11 @@
 import React from "react";
 
 type ShowTimeProps = {
-  id: number;
+  id: string;
   date: string;
   title: string;
   isSelected: boolean;
-  onSelect: (id: number) => void;
+  onSelect: (date: string) => void;
 };
 
 export default function ShowTime({
@@ -17,8 +17,7 @@ export default function ShowTime({
   onSelect,
 }: ShowTimeProps) {
   const handleClick = () => {
-    onSelect(id);
-    console.log(`Title: ${title}, Date: ${date}`);
+    onSelect(date);
   };
 
   return (

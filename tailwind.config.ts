@@ -22,6 +22,14 @@ const config = {
         dark: "#0D032B",
         darkBlue: "#1E0342",
         darkPurple: "#211951",
+        darkBlueGray: {
+          "100": "#0a1433",
+          "200": "#081028",
+        },
+        purpleGray: {
+          "100": "#222338",
+          "200": "#1b1c31",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

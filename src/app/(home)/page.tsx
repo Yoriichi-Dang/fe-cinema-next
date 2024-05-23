@@ -1,16 +1,7 @@
 "use client";
 import Hero from "@/components/home/Hero";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import Image from "next/image";
-import {
-  faArrowRight,
-  faCirclePlay,
-  faStar,
-  faTicket,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -22,100 +13,32 @@ import CardMovie from "@/components/home/CardMovie";
 
 export default function Page() {
   const [isPlaying, setIsPlaying] = useState(true);
-  const onPlaying = [
-    {
-      src: "/assets/movies/movie_1.jpg",
-      label: "Hành tinh khỉ",
-      description:
-        "Some representative placeholder content for the first slide.",
-    },
-    {
-      src: "/assets/movies/movie_2.jpg",
-
-      label: "Lật mặt",
-      description:
-        "Some representative placeholder content for the second slide.",
-    },
-    {
-      src: "/assets/movies/movie_3.jpg",
-      label: "Vây hãm",
-      description:
-        "Some representative placeholder content for the third slide.",
-    },
-    {
-      src: "/assets/movies/movie_3.jpg",
-      label: "Third slide label",
-      description:
-        "Some representative placeholder content for the third slide.",
-    },
-    {
-      src: "/assets/movies/movie_3.jpg",
-      label: "Third slide label",
-      description:
-        "Some representative placeholder content for the third slide.",
-    },
-    {
-      src: "/assets/movies/movie_3.jpg",
-      label: "Third slide label",
-      description:
-        "Some representative placeholder content for the third slide.",
-    },
-    {
-      src: "/assets/movies/movie_2.jpg",
-
-      label: "Second slide label",
-      description:
-        "Some representative placeholder content for the second slide.",
-    },
-  ];
-  const upComing = [
-    {
-      src: "/assets/movies/movie_1.jpg",
-      label: "Hành tinh khỉ",
-      description:
-        "Some representative placeholder content for the first slide.",
-    },
-    {
-      src: "/assets/movies/movie_2.jpg",
-
-      label: "Lật mặt",
-      description:
-        "Some representative placeholder content for the second slide.",
-    },
-    {
-      src: "/assets/movies/movie_3.jpg",
-      label: "Vây hãm",
-      description:
-        "Some representative placeholder content for the third slide.",
-    },
-    {
-      src: "/assets/movies/movie_2.jpg",
-
-      label: "Lật mặt",
-      description:
-        "Some representative placeholder content for the second slide.",
-    },
-    {
-      src: "/assets/movies/movie_3.jpg",
-      label: "Third slide label",
-      description:
-        "Some representative placeholder content for the third slide.",
-    },
-    {
-      src: "/assets/movies/movie_2.jpg",
-
-      label: "Lật mặt",
-      description:
-        "Some representative placeholder content for the second slide.",
-    },
-    {
-      src: "/assets/movies/movie_2.jpg",
-
-      label: "Second slide label",
-      description:
-        "Some representative placeholder content for the second slide.",
-    },
-  ];
+  const [onPlaying, setOnPlaying] = useState([]);
+  const [upComing, setUpComing] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/movies/all/`
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch movie data");
+        } else {
+          return await res.json();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const loadMovies = async () => {
+      const data = await fetchData();
+      if (data) {
+        setOnPlaying(data.filter((item: any) => item.status === "Playing"));
+        setUpComing(data.filter((item: any) => item.status === "Upcoming"));
+      }
+    };
+    loadMovies();
+  }, []);
   let slides = [];
   if (isPlaying) slides = [...onPlaying];
   else slides = [...upComing];
@@ -167,15 +90,16 @@ export default function Page() {
             className="w-full md:max-w-2xl xl:max-w-4xl "
           >
             <CarouselContent>
-              {slides.map((slide, index) => (
+              {slides.map((slide: any, index) => (
                 <CarouselItem
                   className="basis-1/4 group hover:cursor-pointer "
                   key={index}
                 >
                   <CardMovie
-                    title={slide.label}
-                    linkImage={slide.src}
-                    rating={9.4}
+                    id={slide.id}
+                    title={slide.title}
+                    linkImage={slide.thumbnail}
+                    rating={slide.average_rating}
                   />
                 </CarouselItem>
               ))}

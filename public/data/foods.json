@@ -1,0 +1,26 @@
+[
+  {
+    "title": "VCombo 1 Big Extra STD",
+    "cost": 109,
+    "description": "1 Ly nước ngọt size L + 01 Hộp bắp + 1 Snack",
+    "image": "/assets/foods/food.jpg"
+  },
+  {
+    "title": "VCombo 1 Big STD",
+    "cost": 89,
+    "description": "01 Ly nước ngọt size L + 01 Hộp bắp",
+    "image": "/assets/foods/food_1.jpg"
+  },
+  {
+    "title": "VCombo 2 Big Extra STD",
+    "cost": 129,
+    "description": "02 Ly nước ngọt size L + 01 Hộp bắp + 1 Snack",
+    "image": "/assets/foods/food_2.jpg"
+  },
+  {
+    "title": "VCombo 2 Big STD",
+    "cost": 109,
+    "description": "02 Ly nước ngọt size L + 01 Hộp bắp",
+    "image": "/assets/foods/food_3.jpg"
+  }
+]

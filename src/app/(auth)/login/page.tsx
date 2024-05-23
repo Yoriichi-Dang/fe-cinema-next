@@ -7,8 +7,11 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schema";
 import { SubmitHandler, useForm } from "react-hook-form";
-
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/Context/AppContext";
 export default function LoginForm() {
+  const router = useRouter();
+  const { setSessionToken, setExpiresToken } = useAppContext();
   const {
     handleSubmit,
     register,
@@ -42,7 +45,12 @@ export default function LoginForm() {
         },
         body: JSON.stringify(data),
       });
-      console.log(await resultNextServer.json());
+      const token = await resultNextServer.json();
+      if (resultNextServer.ok) {
+        setSessionToken(token.accessToken);
+        setExpiresToken(token.date);
+        router.push("/");
+      }
     }
   };
 
